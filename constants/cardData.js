@@ -1,49 +1,49 @@
 export const smallCardData = [
   {
-    location: "Mumbai",
-    distance: "2-hour drive",
+    location: "Toronto",
+    distance: "From $1 Million",
     image:
       "https://a0.muscache.com/im/pictures/31e445ed-8b69-477b-aefd-d04dae6d0bb1.jpg?im_q=medq&im_w=720",
   },
   {
-    location: "Lonavla",
-    distance: "45-minute drive",
+    location: "Brampton",
+    distance: "From $600k",
     image:
       "https://a0.muscache.com/im/pictures/42901911-940b-45ac-997e-961ebf472195.jpg?im_q=medq&im_w=720",
   },
   {
-    location: "Calangute",
-    distance: "6.5-hour drive",
+    location: "Kitchener/Waterloo",
+    distance: "From $300k",
     image:
       "https://a0.muscache.com/im/pictures/f98fbb2e-9e10-4514-b4a7-02c467e1da03.jpg?im_q=medq&im_w=720",
   },
   {
-    location: "Candolim",
-    distance: "6.5-hour drive",
+    location: "Cambridge",
+    distance: "From $400k",
     image:
       "https://a0.muscache.com/im/pictures/3d541658-fb05-4316-af26-b8c1337fbe8c.jpg?im_q=medq&im_w=720",
   },
   {
-    location: "Saligao",
-    distance: "6.5-hour drive",
+    location: "London",
+    distance: "From $600k",
     image:
       "https://a0.muscache.com/im/pictures/558a403a-aeed-4829-83a6-c9b0ccf21866.jpg?im_q=medq&im_w=720",
   },
   {
-    location: "Baga",
-    distance: "6.5-hour drive",
+    location: "Paris",
+    distance: "From $450k",
     image:
       "https://a0.muscache.com/im/pictures/be4d3ba5-08d7-4afe-95a7-f2da6453886a.jpg?im_q=medq&im_w=720",
   },
   {
-    location: "Anjuna",
-    distance: "6.5-hour drive",
+    location: "Orangeville",
+    distance: "From $300k",
     image:
       "https://a0.muscache.com/im/pictures/7253e011-7c22-48fd-b75d-d0da35372397.jpg?im_q=medq&im_w=720",
   },
   {
-    location: "Arpora",
-    distance: "6.5-hour drive",
+    location: "Oakville",
+    distance: "From $800k",
     image:
       "https://a0.muscache.com/im/pictures/52e8083e-2de2-446d-a860-534eab250541.jpg?im_q=medq&im_w=720",
   },

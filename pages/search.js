@@ -33,7 +33,7 @@ const Search = ({ searchResults }) => {
             - for {noOfGuests} guests
           </p>
           <h1 className="text-3xl font-semibold text-gray-700 mb-6">
-            Stays in {location}
+            Homes on assignment in {location}
           </h1>
           <div className="hidden lg:inline-flex mb-5 space-x-3 text-gray-800 whitespace-nowrap">
             <p className="button">Cancellation Flexibility</p>

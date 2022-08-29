@@ -6,13 +6,17 @@ import {
   UserCircleIcon,
   UserGroupIcon,
 } from "@heroicons/react/solid";
+import {
+  faBed,
+  faBath
+} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Logo from "../images/Logo.png";
 
-import "react-date-range/dist/styles.css"; // main css file
-import "react-date-range/dist/theme/default.css"; // theme css file
-import { DateRangePicker } from "react-date-range";
+import { Range, getTrackBackground, rtl} from 'react-range';
 
 const Header = ({ placeholder }) => {
   const router = useRouter();
@@ -20,7 +24,14 @@ const Header = ({ placeholder }) => {
   const [searchInput, setSearchInput] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [noOfGuests, setNoOfGuests] = useState(1);
+  const [minNumOfBeds, setMinNumOfBeds] = useState(1);
+  const [maxNumOfBeds, setMaxNumOfBeds] = useState(1);
+  const [minNumOfBaths, setMinNumOfBaths] = useState(1);
+  const [maxNumOfBaths, setMaxNumOfBaths] = useState(1);
+  const [sqft, setSquareFootage] = useState([1400, 2400]);
+  const STEP = 10;
+  const MIN = 300;
+  const MAX = 4000;
 
   const Submit = () => {
     router.push({
@@ -29,7 +40,10 @@ const Header = ({ placeholder }) => {
         location: searchInput,
         startDate: startDate.toISOString(),
         endDate: endDate.toISOString(),
-        noOfGuests,
+        minNumOfBeds,
+        maxNumOfBeds,
+        minNumOfBaths,
+        maxNumOfBaths
       },
     });
   };
@@ -40,7 +54,7 @@ const Header = ({ placeholder }) => {
   const Button = ({ text, color, submit }) => (
     <button
       className={`text-md font-semibold flex-grow font-mono border-2 rounded-lg py-2 hover:shadow-md shadow-sm ${
-        color && "text-red-400"
+        color && "text-blue-400"
       }`}
       onClick={submit ? Submit : Cancel}
     >
@@ -79,17 +93,17 @@ const Header = ({ placeholder }) => {
         <input
           value={searchInput}
           type="text"
-          placeholder={placeholder || "Look for homes"}
+          placeholder={placeholder || "Look for a homes by region"}
           className="pl-5 bg-transparent outline-none flex-grow text-md text-gray-600 placeholder-gray-400 text-xs sm:text-sm lg:text-md xl:text-lg"
           onChange={(e) => {
             setSearchInput(e.target.value);
           }}
         />
-        <SearchIcon className="h-8  bg-red-400 text-white rounded-full p-2 cursor-pointer hidden lg:inline-flex md:mx-2" />
+        <SearchIcon className="h-8  bg-blue-400 text-white rounded-full p-2 cursor-pointer hidden lg:inline-flex md:mx-2" />
       </div>
       <div className="space-x-4 items-center justify-end text-gray-500 hidden md:flex">
         <p className="cursor-pointer hover:bg-gray-100 py-2 px-3 rounded-full hidden lg:inline">
-          Become a host
+          Become a Seller
         </p>
         <GlobeAltIcon className="h-10 cursor-pointer hover:bg-gray-100 p-2 rounded-full hidden md:inline" />
         <div className="items-center border-2 space-x-2 rounded-full p-2 cursor-pointer hover:shadow-md hidden md:flex">
@@ -98,33 +112,179 @@ const Header = ({ placeholder }) => {
         </div>
       </div>
       {searchInput && (
+      
         <div className="md:flex flex-col col-span-3 mx-auto mt-3 hidden ">
-          <DateRangePicker
-            ranges={[selectionRange]}
-            minDate={new Date()}
-            rangeColors={["#fd5b61"]}
-            onChange={handleSelect}
-          />
-          <div className="flex items-center mb-4 ml-5">
-            <h2 className="text-2xl font-mono font-semibold text-gray-600 flex-grow">
-              Number of Guests
+        <div className="flex items-center mb-4 ml-5">
+            <h2 className="text-xl font-mono font-semibold text-gray-600 flex-grow mr-6">
+              Bedrooms
             </h2>
-            <UserGroupIcon className="h-5 mr-4 text-gray-600" />
+            <FontAwesomeIcon className="h-5 mr-4 text-gray-600" icon={faBed}/>
+            {/* <UserGroupIcon className="h-5 mr-4 text-gray-600" /> */}
             <input
               type="number"
-              className="w-20 pl-2 text-lg outline-none border-2 text-red-400 px-2 rounded-md"
+              className="w-20 pl-2 text-lg outline-none border-2 text-blue-400 px-2 rounded-md"
               min={1}
-              value={noOfGuests}
+              value={minNumOfBeds}
               onChange={(e) => {
-                setNoOfGuests(e.target.value);
+                if (e.target.value > maxNumOfBeds){
+                  setMaxNumOfBeds(e.target.value)
+                }
+                setMinNumOfBeds(e.target.value);
               }}
             />
+            <input
+              type="number"
+              className="w-20 pl-2 text-lg outline-none border-2 text-blue-400 px-2 ml-5 rounded-md"
+              min={1}
+              value={maxNumOfBeds}
+              onChange={(e) => {
+                if (e.target.value < minNumOfBeds) [
+                  setMinNumOfBeds(e.target.value)
+                ]
+                setMaxNumOfBeds(e.target.value);
+              }}
+            />
+          </div>
+        <div className="flex items-center mb-4 ml-5">
+            <h2 className="text-xl font-mono font-semibold text-gray-600 flex-grow mr-6">
+              Bathrooms
+            </h2>
+            <FontAwesomeIcon className="h-5 mr-4 text-gray-600" icon={faBath}/>
+            {/* <UserGroupIcon className="h-5 mr-4 text-gray-600" /> */}
+            <input
+              type="number"
+              className="w-20 pl-2 text-lg outline-none border-2 text-blue-400 px-2 rounded-md"
+              min={1}
+              value={minNumOfBaths}
+              onChange={(e) => {
+                if (e.target.value > maxNumOfBeds){
+                  setMaxNumOfBaths(e.target.value)
+                }
+                setMinNumOfBaths(e.target.value);
+              }}
+            />
+            <input
+              type="number"
+              className="w-20 pl-2 text-lg outline-none border-2 text-blue-400 px-2 ml-5 rounded-md"
+              min={1}
+              value={maxNumOfBaths}
+              onChange={(e) => {
+                if (e.target.value < minNumOfBaths) [
+                  setMinNumOfBaths(e.target.value)
+                ]
+                setMaxNumOfBaths(e.target.value);
+              }}
+            />
+          </div>
+          <div className="flex items-center mb-4 ml-5 my-10">
+            <h2 className="text-xl font-mono font-semibold text-gray-600 flex-grow mr-6">
+              Square Footage
+            </h2>
+            <FontAwesomeIcon className="h-5 mr-4 text-gray-600" icon={faBed}/>
+            <div className="w-44 h-16">
+            <Range
+              values={sqft}
+              step={STEP}
+              min={MIN}
+              max={MAX}
+              rtl={rtl}
+              onChange={(values) => setSquareFootage(values)}
+              renderTrack={({ props, children }) => (
+                <div
+                  onMouseDown={props.onMouseDown}
+                  onTouchStart={props.onTouchStart}
+                  style={{
+                    ...props.style,
+                    height: '36px',
+                    display: 'flex',
+                    width: '100%'
+                  }}
+                >
+                  <div
+                    ref={props.ref}
+                    style={{
+                      height: '5px',
+                      width: '100%',
+                      borderRadius: '4px',
+                      background: getTrackBackground({
+                        values: sqft,
+                        colors: ['#ccc', '#548BF4', '#ccc'],
+                        min: MIN,
+                        max: MAX,
+                        rtl
+                      }),
+                      alignSelf: 'center'
+                    }}
+                  >
+                    {children}
+                  </div>
+                </div>
+              )}
+              renderThumb={({ index, props, isDragged }) => (
+                <div
+                  {...props}
+                  style={{
+                    ...props.style,
+                    height: '20px',
+                    width: '20px',
+                    borderRadius: '30px',
+                    backgroundColor: '#FFF',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    boxShadow: '0px 2px 6px #AAA'
+                  }}
+                >
+                  { index > 0 ?
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '-35px',
+                      color: '#fff',
+                      fontWeight: 'bold',
+                      fontSize: '14px',
+                      fontFamily: 'Arial,Helvetica Neue,Helvetica,sans-serif',
+                      padding: '4px',
+                      borderRadius: '4px',
+                      backgroundColor: '#548BF4'
+                    }}
+                  >
+                    {sqft[index].toFixed(1)}
+                  </div>
+                  :
+                  <div
+                  style={{
+                    position: 'absolute',
+                    top: '35px',
+                    color: '#fff',
+                    fontWeight: 'bold',
+                    fontSize: '14px',
+                    fontFamily: 'Arial,Helvetica Neue,Helvetica,sans-serif',
+                    padding: '4px',
+                    borderRadius: '4px',
+                    backgroundColor: '#548BF4'
+                  }}
+                >
+                  {sqft[index].toFixed(1)}
+                </div>
+                  }
+                  <div
+                    style={{
+                      height: '16px',
+                      width: '5px',
+                      backgroundColor: isDragged ? '#548BF4' : '#CCC'
+                    }}
+                  />
+                </div>
+              )}
+            />
+          </div>
           </div>
           <div className="flex space-x-1 ml-5">
             <Button text="Cancel" />
             <Button text="Submit" color submit />
           </div>
-        </div>
+        </div>        
       )}
     </header>
   );
